@@ -39,19 +39,24 @@ import {
 } from 'lucide-react';
 
 // --- Firebase Configuration ---
-// UPDATED: Safe access to Environment Variables
-// This helper function prevents crashes in environments (like this preview) 
-// where import.meta.env might not be fully supported, while working perfectly in Vite.
+
+// HELPER: Environment Variable Access
+// NOTE: The preview environment compiles to ES2015 which doesn't support import.meta.
+// I have commented out the actual implementation to prevent build errors here.
+// WHEN YOU DEPLOY LOCALLY: Uncomment the code inside this function.
 const getEnvVar = (key: string) => {
-  // @ts-ignore
-  if (typeof import.meta !== 'undefined' && import.meta.env) {
-    // @ts-ignore
+  // UNCOMMENT THIS BLOCK FOR LOCAL VITE APP:
+  /*
+  if (import.meta.env) {
     return import.meta.env[key] || '';
   }
-  return '';
+  */
+  return ''; // Placeholder for preview
 };
 
 const firebaseConfig = {
+  // In your local setup, these calls will read from your .env file
+  // if you uncomment the logic in getEnvVar above.
   apiKey: getEnvVar('VITE_FIREBASE_API_KEY'),
   authDomain: getEnvVar('VITE_FIREBASE_AUTH_DOMAIN'),
   projectId: getEnvVar('VITE_FIREBASE_PROJECT_ID'),
@@ -107,6 +112,7 @@ interface Reference {
   url: string;
   tags: string[];
   aiSummary?: string;
+  createdAt?: any;
 }
 
 // --- Components ---
@@ -144,9 +150,14 @@ export default function LabHub() {
                <h3 className="text-lg font-bold text-slate-900">Setup Required</h3>
                <p className="text-sm text-slate-500">
                  The app is running, but it needs your Firebase keys to connect. 
-                 Make sure you have created the <code className="bg-slate-100 p-1 rounded">.env</code> file locally with your 
-                 <code className="bg-slate-100 p-1 rounded">VITE_FIREBASE_...</code> keys.
                </p>
+               <div className="text-left bg-slate-100 p-4 rounded-lg text-xs font-mono text-slate-600 overflow-x-auto">
+                 <p className="mb-2 font-bold text-slate-700">// 1. In your project, check src/App.tsx:</p>
+                 <p>Uncomment the code inside <span className="text-indigo-600">getEnvVar()</span></p>
+                 <p className="mt-2 mb-2 font-bold text-slate-700">// 2. Create a .env file locally:</p>
+                 <p>VITE_FIREBASE_API_KEY=AIzaSy...</p>
+                 <p>VITE_FIREBASE_AUTH_DOMAIN=...</p>
+               </div>
             </div>
           ) : (
             <div className="animate-pulse flex flex-col items-center w-full">
