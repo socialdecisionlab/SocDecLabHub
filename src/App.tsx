@@ -51,6 +51,8 @@ const getEnvVar = (key: string) => {
     return import.meta.env[key] || '';
   }
   */
+  // Prevent unused variable error in preview
+  void key;
   return ''; // Placeholder for preview
 };
 
