@@ -46,11 +46,11 @@ import {
 // WHEN YOU DEPLOY LOCALLY: Uncomment the code inside this function.
 const getEnvVar = (key: string) => {
   // UNCOMMENT THIS BLOCK FOR LOCAL VITE APP:
-  /*
+  
   if (import.meta.env) {
     return import.meta.env[key] || '';
   }
-  */
+  
   // Prevent unused variable error in preview
   void key;
   return ''; // Placeholder for preview
